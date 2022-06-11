@@ -10,18 +10,31 @@
  */
 class Solution {
     
-    static ListNode reverse(ListNode head){
+//     static ListNode reverse(ListNode head){
+//         if(head==null || head.next==null){
+//             return head;
+//         }
+//         ListNode newhead=reverse(head.next);
+//         head.next.next=head;
+//         head.next=null;
+//         return newhead;
+        
+//     }
+    public ListNode reverseList(ListNode head) {
         if(head==null || head.next==null){
             return head;
         }
-        ListNode newhead=reverse(head.next);
-        head.next.next=head;
-        head.next=null;
-        return newhead;
+        ListNode a=head;
+        ListNode prev=null;
+        while(a!=null){
+            ListNode temp=a.next;
+            a.next=prev;
+            prev=a;
+            a=temp;
+            
+        }
+        return prev;
+     
         
-    }
-    public ListNode reverseList(ListNode head) {
-     ListNode newhead=reverse(head);
-        return newhead;
     }
 }
