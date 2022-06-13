@@ -1,5 +1,5 @@
 # Given a linked list of 0s, 1s and 2s, sort it.
-## Easy 
+##  Easy 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given a linked list of <strong>N</strong>&nbsp;nodes where nodes can contain values&nbsp;<strong>0s</strong>, <strong>1s,</strong> and <strong>2s&nbsp;</strong>only. The task is to segregate <strong>0s</strong>, <strong>1s,</strong> and <strong>2s</strong>&nbsp;linked list such that all zeros segregate to head side, 2s at the end of the linked list, and 1s in the mid of 0s and 2s.</span></p>
 
