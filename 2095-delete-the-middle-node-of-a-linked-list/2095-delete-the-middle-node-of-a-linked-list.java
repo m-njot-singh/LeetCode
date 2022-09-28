@@ -21,12 +21,12 @@ class Solution {
             length++;
         }
         mid=length/2;
-        System.out.println(length);
-        System.out.println(mid);
+        // System.out.println(length);
+        // System.out.println(mid);
         for(int i=0;i<mid-1;i++){ 
             
             temp1=temp1.next;
-           System.out.println(temp1.val);
+           // System.out.println(temp1.val);
         }
         temp1.next=temp1.next.next;
         return head;
