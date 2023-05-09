@@ -6,6 +6,7 @@ class Solution {
         if(row<=col+1){
             dfs(nums,l,vis,row,col+1);
         }
+        
         dfs(nums,l,vis,row+1,col);
         dfs(nums,l,vis,row,col-1);
         dfs(nums,l,vis,row-1,col);
