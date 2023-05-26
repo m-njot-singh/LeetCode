@@ -61,30 +61,78 @@ class Main {
 class Solution
 {
     //Function to return list containing vertices in Topological order. 
-    public static void dfs(int node,int[] vis,Stack<Integer> st,ArrayList<ArrayList<Integer>> adj){
-        if(vis[node]==0){
-            vis[node]=1;
-        }
-        for(int a:adj.get(node)){
-            if(vis[a]==0){
-                dfs(a,vis,st,adj);
-            }
-        }
-        st.push(node);
-    }
+    
+    // DFS
+    
+    // public static void dfs(int node,int[] vis,Stack<Integer> st,ArrayList<ArrayList<Integer>> adj){
+    //     if(vis[node]==0){
+    //         vis[node]=1;
+    //     }
+    //     for(int a:adj.get(node)){
+    //         if(vis[a]==0){
+    //             dfs(a,vis,st,adj);
+    //         }
+    //     }
+    //     st.push(node);
+    // }
+    
+    
+    // static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
+    // {
+    //     // add your code here
+    //     Stack<Integer> st=new Stack<>();
+    //     int[] ans=new int[V];
+    //     int[]vis=new int[V];
+    //     for(int i=0;i<V;i++){
+    //         if(vis[i]==0){
+    //             dfs(i,vis,st,adj);
+    //         }
+    //     }
+    //     for(int i=0;i<V;i++){
+    //         ans[i]=st.pop();
+    //     }
+    //     return ans;
+    // }
+    
+    
+    
+    // BFS
     static int[] topoSort(int V, ArrayList<ArrayList<Integer>> adj) 
     {
         // add your code here
-        Stack<Integer> st=new Stack<>();
-        int[] ans=new int[V];
-        int[]vis=new int[V];
+        Queue<Integer> q=new LinkedList<>();
+        int[] indegree=new int[V];
+        List<Integer> l=new ArrayList<>();
         for(int i=0;i<V;i++){
-            if(vis[i]==0){
-                dfs(i,vis,st,adj);
+            for(int a:adj.get(i)){
+                indegree[a]=indegree[a]+1;
             }
         }
+        
         for(int i=0;i<V;i++){
-            ans[i]=st.pop();
+            if(indegree[i]==0){
+                q.add(i);
+            }
+        }
+        
+        while(!q.isEmpty()){
+            int node=q.peek();
+            q.remove();
+            l.add(node);
+            for(int a:adj.get(node)){
+                indegree[a]=indegree[a]-1;
+                if(indegree[a]==0){
+                    q.add(a);
+                }
+            }
+        }
+        
+        
+        
+        
+        int [] ans=new int[V];
+        for(int i=0;i<V;i++){
+            ans[i]=l.get(i);
         }
         return ans;
     }
