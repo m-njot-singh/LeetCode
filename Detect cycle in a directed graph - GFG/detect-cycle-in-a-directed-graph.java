@@ -33,31 +33,74 @@ class DriverClass {
 
 class Solution {
     // Function to detect cycle in a directed graph.
-    public static boolean dfs(int node,ArrayList<ArrayList<Integer>> adj,int[] vis,int[] path){
-        vis[node]=1;
-        path[node]=1;
-        for(int a:adj.get(node)){
-            if(vis[a]==0){
-                if(dfs(a,adj,vis,path)==true)return true;
-                else{
-                    path[a]=0;
-                }
-            }
-            else if(vis[a]==1 && path[a]==1)return true;
-        }
-        path[node]=0;
-        return false;
-    }
+    
+    //DFS
+    
+    // public static boolean dfs(int node,ArrayList<ArrayList<Integer>> adj,int[] vis,int[] path){
+    //     vis[node]=1;
+    //     path[node]=1;
+    //     for(int a:adj.get(node)){
+    //         if(vis[a]==0){
+    //             if(dfs(a,adj,vis,path)==true)return true;
+    //             else{
+    //                 path[a]=0;
+    //             }
+    //         }
+    //         else if(vis[a]==1 && path[a]==1)return true;
+    //     }
+    //     path[node]=0;
+    //     return false;
+    // }
+    
+    // public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
+    //     // code here
+        
+    //     int[] vis=new int[V];
+    //     int[] path=new int[V];
+    //     for(int i=0;i<V;i++){
+    //         if(vis[i]==0){
+    //             if(dfs(i,adj,vis,path)==true)return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+    
+    
+    //BFS
+    
     public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
         // code here
         
-        int[] vis=new int[V];
-        int[] path=new int[V];
+         Queue<Integer> q=new LinkedList<>();
+        int[] indegree=new int[V];
+        // List<Integer> l=new ArrayList<>();
+        int count=0;
         for(int i=0;i<V;i++){
-            if(vis[i]==0){
-                if(dfs(i,adj,vis,path)==true)return true;
+            for(int a:adj.get(i)){
+                indegree[a]=indegree[a]+1;
             }
         }
-        return false;
+        
+        for(int i=0;i<V;i++){
+            if(indegree[i]==0){
+                q.add(i);
+            }
+        }
+        
+        while(!q.isEmpty()){
+            int node=q.peek();
+            q.remove();
+            count++;
+            for(int a:adj.get(node)){
+                indegree[a]=indegree[a]-1;
+                if(indegree[a]==0){
+                    q.add(a);
+                }
+            }
+        }
+        
+        if(count==V)return false;
+        return true;
     }
+    
 }
