@@ -31,21 +31,26 @@ public class Main {
 //User function Template for Java
 
 class Solution {
-    public static int dfs(int n,int [] arr,int [] dp){
-        if(n==0)return arr[n];
-        if(n<0)return 0;
-        if(dp[n]!=-1)return dp[n];
-        int pick=arr[n]+dfs(n-2,arr,dp);
-        int not_pick=0+dfs(n-1,arr,dp);
-        return dp[n]=Math.max(pick,not_pick);
-    }
+    // public static int dfs(int n,int [] arr,int [] dp){
+    //     if(n==0)return arr[n];
+    //     if(n<0)return 0;
+    //     if(dp[n]!=-1)return dp[n];
+    //     int pick=arr[n]+dfs(n-2,arr,dp);
+    //     int not_pick=0+dfs(n-1,arr,dp);
+    //     return dp[n]=Math.max(pick,not_pick);
+    // }
     int findMaxSum(int arr[], int n) {
         // code here
         int dp[]=new int[n+1];
-        for(int i=0;i<=n;i++){
-            dp[i]=-1;
+        dp[0]=arr[0];
+        int neg=0;
+        for(int i=1;i<n;i++){
+            int pick=arr[i];
+            if(i>1)pick+=dp[i-2];
+            int not_pick=0+dp[i-1];
+            dp[i]=Math.max(pick,not_pick);
         }
         
-        return dfs(n-1,arr,dp);
+        return dp[n-1];
     }
 }
