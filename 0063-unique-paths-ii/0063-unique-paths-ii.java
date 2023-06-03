@@ -9,11 +9,31 @@ class Solution {
     }
     public int uniquePathsWithObstacles(int[][] adj) {
         int [][] dp=new int[adj.length][adj[0].length];
+        dp[0][0]=1;
         for(int i=0;i<adj.length;i++){
             for(int j=0;j<adj[0].length;j++){
-                dp[i][j]=-1;
+                if(adj[i][j]==1){
+                    dp[i][j]=0;
+                }
+                else if(i==0 && j==0){
+                    dp[i][j]=1;
+                    continue;
+                }
+                else{
+                     int down=0;
+                if(i>0){
+                     down=dp[i-1][j];
+                }
+                
+                int right=0;
+                if(j>0){
+                    right=dp[i][j-1];
+                }
+                dp[i][j]=down+right;
+                }
+               
             }
         }
-        return dfs(0,0,adj.length-1,adj[0].length-1,adj,dp);
+        return dp[adj.length-1][adj[0].length-1];
     }
 }
