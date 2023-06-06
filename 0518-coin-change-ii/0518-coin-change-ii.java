@@ -13,12 +13,31 @@ class Solution {
         }
         return dp[ind][target]=pick+not_pick;
     }
-    public int change(int amount, int[] coins) {
-        int n=coins.length;
-        int[][] dp=new int[n][amount+1];
-            for(int[] i:dp){
-                Arrays.fill(i,-1);
+    public int change(int target, int[] arr) {
+        int n=arr.length;
+        int[][] dp=new int[n][target+1];
+        for(int i=0;i<=target;i++){
+            if(i%arr[0]==0)dp[0][i]=1;
+            else{
+                dp[0][i]=0;
             }
-        return dfs(n-1,amount,coins,dp);
+        }
+        
+        for(int ind=1;ind<n;ind++){
+            for(int t=0;t<=target;t++){
+                
+                int not_pick=dp[ind-1][t];
+                int pick=0;
+                if(arr[ind]<=t){
+                    pick=dp[ind][t-arr[ind]];
+                }
+                dp[ind][t]=pick+not_pick;
+                
+                
+            }
+        }
+        
+        
+       return dp[n-1][target];
     }
 }
