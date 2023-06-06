@@ -26,25 +26,25 @@ class RodCutting {
 
 
 class Solution{
-    public static int dfs(int ind,int target,int[] price,int [][] dp){
-        if(ind==0){
-            return target*price[0];
-        }
-        if(dp[ind][target]!=-1)return dp[ind][target];
-        int not_pick=0+dfs(ind-1,target,price,dp);
-        int pick=Integer.MIN_VALUE;
-        int rodlength=ind+1;
-        if(rodlength<=target){
-            pick=price[ind]+dfs(ind,target-rodlength,price,dp);
-        }
-        return dp[ind][target]=Math.max(pick,not_pick);
-    }
     public int cutRod(int price[], int n) {
         //code here
         int[][] dp=new int[n][n+1];
-        for(int[] i:dp){
-            Arrays.fill(i,-1);
+        for(int i=0;i<=n;i++){
+            dp[0][i]=i*price[0];
         }
-        return dfs(n-1,n,price,dp);
+        for(int ind=1;ind<n;ind++){
+            for(int target=0;target<=n;target++){
+                
+                 int not_pick=0+dp[ind-1][target];
+                int pick=Integer.MIN_VALUE;
+                int rodlength=ind+1;
+                if(rodlength<=target){
+                    pick=price[ind]+dp[ind][target-rodlength];
+                }
+                dp[ind][target]=Math.max(pick,not_pick);
+                
+            }
+        }
+        return dp[n-1][n];
     }
 }
