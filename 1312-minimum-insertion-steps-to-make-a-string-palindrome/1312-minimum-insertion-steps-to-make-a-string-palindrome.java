@@ -10,20 +10,22 @@ class Solution {
         s1.append(s);
         s1.reverse();
         String a=s1.toString();
-        int[][] dp=new int[s.length()+1][s.length()+1];
-        for(int i=0;i<=s.length();i++)dp[i][0]=0;
-        for(int j=0;j<=s.length();j++)dp[0][j]=0;
+        int[] prev=new int[s.length()+1];
+        int[] curr=new int[s.length()+1];
+        
+        for(int j=0;j<=s.length();j++)prev[j]=0;
         
         for(int i=1;i<=s.length();i++){
             for(int j=1;j<=s.length();j++){
                 
-                 if(s.charAt(i-1)==a.charAt(j-1))dp[i][j]=1+dp[i-1][j-1];
-                else dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+                 if(s.charAt(i-1)==a.charAt(j-1))curr[j]=1+prev[j-1];
+                else curr[j]=Math.max(prev[j],curr[j-1]);
                 
             }
+            prev=(int[])(curr.clone());
         }
        
-        int p=dp[s.length()][s.length()];
+        int p=prev[s.length()];
         return s.length()-p;
     }
 }
