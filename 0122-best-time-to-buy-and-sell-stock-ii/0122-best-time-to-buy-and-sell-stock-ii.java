@@ -1,31 +1,22 @@
 class Solution {
-    public int maxProfit(int[] prices) {
-        int i=0;
-        int j=0;
+    public static int dfs(int ind,int buy,int[] prices,int[][] dp){
+        if(ind==prices.length)return 0;
+        if(dp[ind][buy]!=-1)return dp[ind][buy];
         int profit=0;
-        while(i<prices.length-1 && j<prices.length-1){
-            while(j<prices.length-1){
-                if(prices[j]>=prices[j+1]){
-                     j++;
-                }
-               else{
-                   break;
-               }
-            }
-            i=j;
-            while(i<prices.length-1 ){
-                if(prices[i]<=prices[i+1]){
-                    i++;
-                }
-                else{
-                    break;
-                }
-            }
-            profit+=prices[i]-prices[j];
-            // System.out.println("profit="+profit+" "+"i="+i+"j="+j);
-            j=i;
-            // System.out.println(j+" "+i);
+        if(buy==1){
+            profit=Math.max((-prices[ind]+dfs(ind+1,0,prices,dp)),0+dfs(ind+1,1,prices,dp));
         }
-        return profit;
+        else{
+            profit=Math.max((prices[ind]+dfs(ind+1,1,prices,dp)),0+dfs(ind+1,0,prices,dp));
+        }
+        return dp[ind][buy]=profit;
+    }
+    public int maxProfit(int[] prices) {
+        int[][] dp=new int[prices.length][2];
+        for(int[] i:dp){
+            Arrays.fill(i,-1);
+        }
+        return dfs(0,1,prices,dp);
+        
     }
 }
