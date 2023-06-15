@@ -1,19 +1,23 @@
 class Solution {
-    public List<Integer> getRow(int rowIndex) {
-        List<Integer> curr=new ArrayList<>();
-        List<Integer> prev=new ArrayList<>();
-        for(int i=0;i<=rowIndex;i++){
-            curr=new ArrayList<>();
-            for(int j=0;j<=i;j++){
-                if(j==0 || j==i){
-                    curr.add(1);
-                }
-                else{
-                    curr.add(prev.get(j-1)+prev.get(j));
-                }
-            }
-            prev=curr;
+    
+    
+    public static long nCr(int n, int r) {
+        long res = 1;
+
+        // calculating nCr:
+        for(int i = 0; i < r; i++) {
+            res = res * (n - i);
+            res = res / (i + 1);
         }
-        return curr;
+        return res;
+    }
+
+    public List<Integer> getRow(int n) {
+        List<Integer> ans=new ArrayList<>();
+        for (int c =0; c <=n; c++) {
+            ans.add((int)nCr(n, c));
+        }
+        
+        return ans;
     }
 }
