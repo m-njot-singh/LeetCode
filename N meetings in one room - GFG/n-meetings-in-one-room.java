@@ -44,7 +44,6 @@ class meet{
     }
     
     class meetingComp implements Comparator<meet>{
-        @Override
         public int compare(meet o1,meet o2){
             if(o1.end <o2.end)return -1;
             else if (o1.end > o2.end)return 1;
