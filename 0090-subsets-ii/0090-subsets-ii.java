@@ -1,5 +1,5 @@
 class Solution {
-    public static void subset(int i,int n,int[] nums,List<List<Integer>> ans,List<Integer> l){
+    public static void dfs(int i,int n,List<Integer> l,List<List<Integer>> ans,int[] nums){
         if(i==n){
             List<Integer> temp=new ArrayList<>(l);
             Collections.sort(temp);
@@ -13,13 +13,13 @@ class Solution {
             return ;
         }
         l.add(nums[i]);
-        subset(i+1,n,nums,ans,l);
+        dfs(i+1,n,l,ans,nums);
         l.remove(l.size()-1);
-        subset(i+1,n,nums,ans,l);
+        dfs(i+1,n,l,ans,nums);
     }
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> ans=new ArrayList<>();
-        subset(0,nums.length,nums,ans,new ArrayList<>());
+        dfs(0,nums.length,new ArrayList<>(),ans,nums);
         return ans;
     }
 }
