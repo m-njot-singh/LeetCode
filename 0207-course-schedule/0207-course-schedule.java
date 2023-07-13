@@ -9,8 +9,11 @@ class Solution {
         }
         int count=0;
         int[] indegree=new int[V];
-        for(int i=0;i<pre.length;i++){
-            indegree[pre[i][1]]++;
+        for(int i=0;i<V;i++){
+            for(int a:adj.get(i)){
+                indegree[a]++;
+            }
+            
         }
         Queue<Integer> q=new LinkedList<>();
         for(int i=0;i<V;i++){
