@@ -1,37 +1,33 @@
 class Solution {
-    public boolean canFinish(int V, int[][] pre) {
-        ArrayList<ArrayList<Integer>> adj=new ArrayList<ArrayList<Integer>>();
-        for(int i=0;i<V;i++){
+    public static boolean dfs(int node,int[] vis,ArrayList<ArrayList<Integer>> adj,int[] pathvis){
+       vis[node]=1;
+        pathvis[node]=1;
+        for(Integer it:adj.get(node)){
+            if(vis[it]==0){
+                if(dfs(it,vis,adj,pathvis))return true; 
+            }
+            else{
+                if(pathvis[it]==1)return true;
+            }
+        }
+        pathvis[node]=0;
+        return false;
+    }
+    public boolean canFinish(int numCourses, int[][] l) {
+        ArrayList<ArrayList<Integer>> adj=new ArrayList<>();
+        for(int i=0;i<numCourses;i++){
             adj.add(new ArrayList<>());
         }
-        for(int i=0;i<pre.length;i++){
-            adj.get(pre[i][0]).add(pre[i][1]);
-        }
-        int count=0;
-        int[] indegree=new int[V];
-        for(int i=0;i<V;i++){
-            for(int a:adj.get(i)){
-                indegree[a]++;
-            }
-            
-        }
-        Queue<Integer> q=new LinkedList<>();
-        for(int i=0;i<V;i++){
-            if(indegree[i]==0){
-                q.add(i);
-            }
+        for(int[] it:l){
+            adj.get(it[0]).add(it[1]);
         }
         
-        while(!q.isEmpty()){
-            int node=q.peek();
-            q.remove();
-            count++;
-            for(int a:adj.get(node)){
-                indegree[a]--;
-                if(indegree[a]==0)q.add(a);
-            }
+       int[] vis=new int[numCourses];
+        int[] pathvis=new int[numCourses];
+        for(int i=0;i<numCourses;i++){
+                if(dfs(i,vis,adj,pathvis))return false;
+                
         }
-        if(count==V)return true;
-        return false;
+        return true;
     }
 }
