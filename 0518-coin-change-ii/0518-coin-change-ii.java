@@ -1,43 +1,28 @@
 class Solution {
-    public static int dfs(int ind,int target,int[] arr,int[][] dp){
-        if(target==0)return 1;
-        if(ind==0){
-            if(target%arr[0]==0)return 1;
+    public static int rec(int i,int amount,int[] coins,int n,int[][] dp){
+        if(amount==0){
+            return 1; 
+        }
+        if(i==n){
             return 0;
         }
-        if(dp[ind][target]!=-1)return dp[ind][target];
-        int not_pick=0+dfs(ind-1,target,arr,dp);
+        
+        if(dp[i][amount]!=-1){
+            return dp[i][amount];
+        }
+        
         int pick=0;
-        if(arr[ind]<=target){
-            pick=dfs(ind,target-arr[ind],arr,dp);
+        if(coins[i]<=amount){
+            pick=rec(i,amount-coins[i],coins,n,dp);
         }
-        return dp[ind][target]=pick+not_pick;
+        int not_pick=rec(i+1,amount,coins,n,dp);
+        
+        return dp[i][amount]=pick+not_pick;
+        
     }
-    public int change(int target, int[] arr) {
-        int n=arr.length;
-        int[][] dp=new int[n][target+1];
-        for(int i=0;i<=target;i++){
-            if(i%arr[0]==0)dp[0][i]=1;
-            else{
-                dp[0][i]=0;
-            }
-        }
-        
-        for(int ind=1;ind<n;ind++){
-            for(int t=0;t<=target;t++){
-                
-                int not_pick=dp[ind-1][t];
-                int pick=0;
-                if(arr[ind]<=t){
-                    pick=dp[ind][t-arr[ind]];
-                }
-                dp[ind][t]=pick+not_pick;
-                
-                
-            }
-        }
-        
-        
-       return dp[n-1][target];
+    public int change(int amount, int[] coins) {
+        int[][] dp=new int[coins.length][amount+1];
+        for(int[] it:dp)Arrays.fill(it,-1); 
+        return rec(0,amount,coins,coins.length,dp);
     }
 }
