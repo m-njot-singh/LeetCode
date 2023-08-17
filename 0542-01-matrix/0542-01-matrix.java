@@ -1,22 +1,28 @@
-class Pair{
+
+class tuple{
     int i;
     int j;
     int d;
-    Pair(int _i,int _j,int _d){
-        this.i=_i;this.j=_j;this.d=_d;
+    tuple(int i,int j,int d){
+        this.i=i;
+        this.j=j;
+        this.d=d;
     }
 }
-
 class Solution {
     public int[][] updateMatrix(int[][] mat) {
-        int[][] vis=new int[mat.length][mat[0].length];
-        int[][] dis=new int[mat.length][mat[0].length];
-        Queue<Pair> q=new LinkedList<>();
-        for(int i=0;i<mat.length;i++){
-            for(int j=0;j<mat[0].length;j++){
+        int n=mat.length;
+        int m=mat[0].length;
+        
+        int[][] vis=new int[n][m];
+        int[][] dis=new int[n][m];
+        Queue<tuple> q=new LinkedList<>();
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
                 if(mat[i][j]==0){
-                    q.add(new Pair(i,j,0));
                     vis[i][j]=1;
+                    q.add(new tuple(i,j,0));
                 }
                 else{
                     vis[i][j]=0;
@@ -24,23 +30,28 @@ class Solution {
             }
         }
         
-        int delrow[]={-1,0,1,0};
-        int delcol[]={0,1,0,-1};
+        int nrow[]={0,1,-1,0};
+        int ncol[]={1,0,0,-1};
+        
         while(!q.isEmpty()){
-            int i=q.peek().i;
-            int j=q.peek().j;
-            int d=q.peek().d;
+            tuple it=q.peek();
+            
+            int i=it.i;
+            int j=it.j;
+            int d=it.d;
+            
             q.remove();
+            
             dis[i][j]=d;
+            
             for(int w=0;w<4;w++){
-                int nrow=i+delrow[w];
-                int ncol=j+delcol[w];
-                if(nrow>=0 && nrow<mat.length && ncol>=0 && ncol<mat[0].length && vis[nrow][ncol]==0 ){
-                    vis[nrow][ncol]=1;
-                    q.add(new Pair(nrow,ncol,d+1));
+                int row=i+nrow[w];
+                int col=j+ncol[w];
+                if(row>=0 && row<n && col>=0 && col<m && vis[row][col]==0){
+                    vis[row][col]=1;
+                    q.add(new tuple(row,col,d+1));
                 }
             }
-            
         }
         return dis;
     }
